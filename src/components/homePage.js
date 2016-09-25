@@ -4,17 +4,6 @@
 'use strict';
 //
 var React = require('react');
-//
-//var Home = React.createClass({
-//  render: function () {
-//    return (
-//      <div className="jumbotron">
-//        <h1>Pluralsoght Administrador</h1>
-//        <p>React, React Router, and flux for ultra responsive</p>
-//      </div>
-//    );
-//  }
-//});
 
 //import React, {Component} from 'react';
 class Home extends React.Component {
