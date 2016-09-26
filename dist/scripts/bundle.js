@@ -53482,28 +53482,76 @@ module.exports = AuthorsPage;
 "use strict";
 
 var React = require('react');
+var Router = require('react-router').Router;
+var Link = require('react-router').Link;
 
 var Header = React.createClass({displayName: "Header",
-	render: function() {
-		return (
-        React.createElement("nav", {className: "navbar navbar-default"}, 
-          React.createElement("div", {className: "container-fluid"}, 
-              React.createElement("a", {href: "/#", className: "navbar-brand"}, 
-                React.createElement("img", {src: "images/pluralsight-logo.png"})
-              ), 
-              React.createElement("ul", {className: "nav navbar-nav"}, 
-                React.createElement("li", null, React.createElement("a", {href: "/#"}, "Home")), 
-                React.createElement("li", null, React.createElement("a", {href: "#authors"}, "Authors")), 
-                React.createElement("li", null, React.createElement("a", {href: "#about"}, "About"))
-              )
+  render: function () {
+    return (
+      React.createElement("nav", {className: "navbar navbar-default"}, 
+        React.createElement("div", {className: "container-fluid"}, 
+          React.createElement(Link, {to: "/", className: "navbar-brand"}, 
+            React.createElement("img", {src: "images/pluralsight-logo.png"})
+          ), 
+          React.createElement("ul", {className: "nav navbar-nav"}, 
+            React.createElement("li", null, React.createElement(Link, {to: "/"}, " Home ")), 
+            React.createElement("li", null, React.createElement(Link, {to: "authors"}, "Authors")), 
+            React.createElement("li", null, React.createElement(Link, {to: "about"}, "About"))
           )
         )
-		);
-	}
+      )
+    );
+  }
 });
 
 module.exports = Header;
-},{"react":236}],244:[function(require,module,exports){
+},{"react":236,"react-router":34}],244:[function(require,module,exports){
+/**
+ * Created by Msarabia on 23/09/2016.
+ */
+'use strict';
+//
+var React = require('react');
+var Link = require('react-router').Link;
+
+//import React, {Component} from 'react';
+class Home extends React.Component {
+  render() {
+    return (
+      React.createElement("div", {className: "jumbotron"}, 
+        React.createElement("h1", null, "Administrador"), 
+        React.createElement("p", null, "React, React Router, and flux "), 
+        React.createElement(Link, {to: "about", className: "btn btn-primary btn-lg"}, "Learn more")
+      )
+    );
+  }
+}
+
+module.exports = Home;
+},{"react":236,"react-router":34}],245:[function(require,module,exports){
+/**
+ * Created by Msarabia on 25/09/2016.
+ */
+"use strict";
+
+var React = require('react');
+var Link = require('react-router').Link;
+
+var NotFoundPage = React.createClass({displayName: "NotFoundPage",
+  render: function() {
+    return (
+      React.createElement("div", null, 
+        React.createElement("h1", null, "Page Not Found"), 
+        React.createElement("p", null, "Whoops! Sorry, there is nothing to see here."), 
+        React.createElement("p", null, React.createElement(Link, {to: "/"}, "Back to Home"))
+      )
+    );
+  }
+});
+
+module.exports = NotFoundPage;
+
+},{"react":236,"react-router":34}],246:[function(require,module,exports){
 /**
  * Created by Msarabia on 22/09/2016.
  */
@@ -53530,7 +53578,7 @@ ReactDom.render((
     )
   ),
   document.getElementById('app'));
-},{"./components/about/aboutPage":239,"./components/app":240,"./components/authors/authorPage":242,"./components/common/header":243,"./routes":245,"react":236,"react-dom":4,"react-router":34}],245:[function(require,module,exports){
+},{"./components/about/aboutPage":239,"./components/app":240,"./components/authors/authorPage":242,"./components/common/header":243,"./routes":247,"react":236,"react-dom":4,"react-router":34}],247:[function(require,module,exports){
 /**
  * Created by Msarabia on 24/09/2016.
  */
@@ -53538,16 +53586,20 @@ ReactDom.render((
 'use strict';
 var React = require('react');
 var Router = require('react-router').Router;
-//var DefaultRoute = Router.DefaultRoute;
+var IndexRoute = require('react-router').IndexRoute;
 var Route = require('react-router').Route;
+var homePage = require('./components/homePage');
 
+//<IndexRoute component={require('./components/homePage')} />
 var routes = (
-  React.createElement(Route, {name: "app", path: "/", component: require('./components/app')}, 
+  React.createElement(Route, {path: "/", component: require('./components/app')}, 
+    React.createElement(IndexRoute, {component: homePage}), 
     React.createElement(Route, {path: "authors", component: require('./components/authors/authorPage')}), 
-    React.createElement(Route, {path: "about", component: require('./components/about/aboutPage')})
+    React.createElement(Route, {path: "about", component: require('./components/about/aboutPage')}), 
+    React.createElement(Route, {path: "*", component: require('./components/notFoundPage')})
   )
 );
 
 module.exports = routes;
 
-},{"./components/about/aboutPage":239,"./components/app":240,"./components/authors/authorPage":242,"react":236,"react-router":34}]},{},[244]);
+},{"./components/about/aboutPage":239,"./components/app":240,"./components/authors/authorPage":242,"./components/homePage":244,"./components/notFoundPage":245,"react":236,"react-router":34}]},{},[246]);
