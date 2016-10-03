@@ -2,13 +2,14 @@
  * Created by Msarabia on 24/09/2016.
  */
 
-var React = require('react');
-var Header = require('./common/header');
-$ = jQuery = require('jquery');
+import React from 'react';
+import Header from './common/header';
+import jQuery from 'jQuery';
 
-var App = React.createClass({
-  render: function () {
+var $ = jQuery;
 
+export default class App extends React.Component {
+  render() {
     return (
       <div>
         <Header />
@@ -16,9 +17,6 @@ var App = React.createClass({
           {this.props.children}
         </div>
       </div>
-    );
+    )
   }
-});
-
-
-module.exports = App;
+}

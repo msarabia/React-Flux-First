@@ -1,27 +1,17 @@
 /**
  * Created by Msarabia on 22/09/2016.
  */
-var React = require('react');
-var ReactDom = require('react-dom');
-var Header = require('./components/common/header');
-
-var Router = require('react-router').Router;
-var Route = require('react-router').Route;
-var hasHistory = require('react-router').hashHistory;
-
-var routes = require('./routes');  // referencia a nuestras rutas
+import React from 'react';
+import ReactDom from 'react-dom';
+import {Router, Route, hashHistory} from 'react-router';
 
 
-var App = require('./components/app');
-var AuthorPage = require('./components/authors/authorPage');
-var About = require('./components/about/aboutPage');
+import  routes from './routes';  // referencia a nuestras rutas
+import App from './components/app';
+import Header from './components/common/header';
+import AuthorPage from './components/authors/authorPage';
+import About from './components/about/aboutPage';
 
-
-// ejecutamos nuestro router y pasamos nuestras rutas
-ReactDom.render((
-    <Router history={hasHistory}>
-      {routes}
-    </Router>
-  ),
-  document.getElementById('app'));
+ //ejecutamos nuestro router y pasamos nuestras rutas
+ReactDom.render(<Router history={hashHistory} routes={routes}/>, document.getElementById('app'));
 

@@ -20,7 +20,8 @@ var config = {
     images: './src/images/*',
     css   : [
       'node_modules/bootstrap/dist/css/bootstrap.min.css',
-      'node_modules/bootstrap/dist/css/bootstrap-theme.min.css'
+      'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
+      'node_modules/toastr/build/toastr.css'
     ],
     dist  : './dist',
     mainJs: './src/main.js'
@@ -52,8 +53,8 @@ gulp.task('html', function () {
 
 gulp.task('js', function () {
   browserify(config.paths.mainJs)
-    //.transform(babelify)
-    .transform(reactify)
+    //.transform(reactify)
+    .transform(babelify)
     .bundle()
     .on('error', console.error.bind(console))
     .pipe(source('bundle.js'))
@@ -78,16 +79,17 @@ gulp.task('images', function () {
 });
 
 
-
 gulp.task('watch', function () {
   gulp.watch(config.paths.html, ['html']);
-  gulp.watch(config.paths.js, ['js','lint']);
+  gulp.watch(config.paths.js, ['js', 'lint']);
 });
 
-gulp.task('lint',function () {
+gulp.task('lint', function () {
+  console.log(config.paths.js);
+  console.log(config.paths.js);
   return gulp.src(config.paths.js)
     .pipe(lint())
     .pipe(lint.format());
 });
 
-gulp.task('default', ['html', 'js', 'css','images','lint', 'open', 'watch']);
+gulp.task('default', ['html', 'js', 'css', 'images', 'lint', 'open', 'watch']);
