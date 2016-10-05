@@ -3,7 +3,8 @@
 import React from 'react';
 import {Router, withRouter} from 'react-router';
 import AuthorForm from './authorForm';
-import AuthorApi from '../../api/authorApi';
+import AuthorActions from '../../actions/authorActions';
+import AuthorStore from '../../stores/authorStore';
 import toastr from 'toastr';
 
 class ManageAuthorPage extends React.Component {
@@ -19,23 +20,22 @@ class ManageAuthorPage extends React.Component {
       errors: {},
       dirty : false
     };
+    this.routerWillLeave = this.routerWillLeave.bind(this);
 
-    //this.routerWillLeave = this.routerWillLeave.bind(this);
   }
 
 
   componentWillMount() {
     var authorId = this.props.params.id; //from the path '/author:id'
 
+
     if (authorId) {
-      this.setState({author: AuthorApi.getAuthorById(authorId)});
+      this.setState({author: AuthorStore.getAuthorById(authorId)});
     }
 
   }
 
   componentDidMount() {
-    console.log("dirty Did Mount", this.state.dirty);
-
     // Establecemos un manejador del evento de cambio de ruta para preguntar si quiere salir sin guardar cambios
     // encaso de haber modificado algun campo
     this.context.router.setRouteLeaveHook(this.props.route, this.routerWillLeave);
@@ -46,6 +46,7 @@ class ManageAuthorPage extends React.Component {
    * @returns {boolean}
    */
   routerWillLeave() {
+    console.log("dirty Did Mount", this.state.dirty);
     if (this.state.dirty && !confirm('Salir sin guardar los cambios ?')) {
       return false;
     }
@@ -90,9 +91,16 @@ class ManageAuthorPage extends React.Component {
       return;
     }
 
-    // ejecutamos el metodo para enviar los cambios a la API
-    // send update to Api
-    AuthorApi.saveAuthor(this.state.author);
+    if(this.state.author.id){
+      AuthorActions.updateAuthor(this.state.author);
+    }
+    else {
+      // ejecutamos el metodo para enviar los cambios a la API
+      // send update to Api
+      AuthorActions.createAuthor(this.state.author);
+    }
+
+    this.state.dirty = false;
     this.setState({dirty: false});
 
     // notificamos al usuario del cambio

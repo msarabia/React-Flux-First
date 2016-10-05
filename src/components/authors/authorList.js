@@ -4,18 +4,32 @@
 'use strict';
 
 var React = require('react');
+import {Link} from 'react-router';
+var AuthorActions = require('../../actions/authorActions');
+var toastr = require('toastr');
 
 
 var AuthorList = React.createClass({
   propTypes: {
     authors: React.PropTypes.array.isRequired
   },
+
+  deleteAuthor: function (id, event) {
+    event.preventDefault(id);
+    debugger;
+    AuthorActions.deleteAuthor(id);
+    toastr.success(' Áuthor Deleted');
+  },
+
   render   : function () {
     var createAuthorRow = function (author) {
       return (
         <tr key={author.id}>
           <td>
-            <a href={"/#authors/"+author.id}>{author.id}</a>
+            <a href="#" onClick={this.deleteAuthor.bind(this,author.id)}>Borrar</a>
+          </td>
+          <td>
+            <Link to={'authors/'+author.id}>{author.id}</Link>
           </td>
           <td>{author.firstName} {author.lastName} </td>
 
@@ -30,6 +44,7 @@ var AuthorList = React.createClass({
         <table className="table">
           <thead>
           <tr>
+            <th></th>
             <th>ID</th>
             <th>Name</th>
           </tr>

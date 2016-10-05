@@ -20,6 +20,7 @@ var routes = (
     <IndexRoute component={homePage}/>
     <Route path="authors" component={require('./components/authors/authorPage')}/>
     <Route path="addAuthor" component={AddAuthor}  />
+    <Route path="authors/:id" component={AddAuthor}  />
     <Route path="about" component={require('./components/about/aboutPage')}/>
     <Route path="about" to="about"/>
     <Route path="awthurs" to="authors"/>
